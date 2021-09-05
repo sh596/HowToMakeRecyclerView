@@ -20,7 +20,22 @@ class MainActivity : AppCompatActivity() {
         //array설정
         val list : ArrayList<Data> = ArrayList()
 
+        binding.recycler.adapter = MainAdapter(list){
+                data, position ->
+            Toast.makeText(this, "삭제", Toast.LENGTH_SHORT).show()
+            list.remove(data)
+            binding.recycler.adapter!!.notifyItemRemoved(position)
+        }
+
+
+        binding.addBtn.setOnClickListener {
+            val randomInt = Random.nextInt(100).toString()
+            Log.d(TAG, "onCreate: random : $randomInt")
+            list.add(
+                Data("학생", R.drawable.ic_launcher_foreground, randomInt)
+            )
+            binding.recycler.adapter!!.notifyItemInserted(list.size.minus(1))
+        }
 
     }
-
 }
